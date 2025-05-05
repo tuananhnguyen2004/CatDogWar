@@ -206,9 +206,11 @@ public class Grid : MonoBehaviour
                 status.Remove(item);
             }
 
+            // Move this to CheckGameOver function, this function will be triggered after a sequence of animations is completed
             if (status.Count == 0)
             {
                 Debug.Log("Game Over! Player " + GameManager.Instance.CurrentGrid + " Win!!");
+                GameManager.Instance.GameOver();
             }
         }
     }

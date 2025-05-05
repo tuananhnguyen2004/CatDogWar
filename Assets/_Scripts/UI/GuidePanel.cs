@@ -3,10 +3,10 @@ using DG.Tweening;
 
 public class GuidePanel : MonoBehaviour
 {
-    private CanvasGroup canvasGroup;
-    [SerializeField] private float animateSpeed;
+    protected CanvasGroup canvasGroup;
+    [SerializeField] protected float animateSpeed;
 
-    private void Awake()
+    virtual protected void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
     }

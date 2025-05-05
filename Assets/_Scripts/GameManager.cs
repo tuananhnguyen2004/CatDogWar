@@ -3,14 +3,16 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using SOEventSystem;
+using UnityEngine.SceneManagement;
+
+public enum PlayerTurn
+{
+    FirstPlayer,
+    SecondPlayer
+}
 
 public class GameManager : Singleton<GameManager>
 {
-    private enum PlayerTurn
-    {
-        FirstPlayer,
-        SecondPlayer
-    }
 
     [Header("List")]
     public List<DraggableItem> invalidItems;
@@ -25,7 +27,9 @@ public class GameManager : Singleton<GameManager>
     [Header("Event Publisher")]
     [SerializeField] private BoolPublisher onGridValid;
     [SerializeField] private VoidPublisher onGameplayEnter;
-    
+    [SerializeField] private IntPublisher onGameOver;
+    [SerializeField] private PlayerTurnPublisher onTurnSwitch;
+
     [Header("Others")]
     private PlayerTurn currentTurn = PlayerTurn.FirstPlayer;
     public Grid CurrentGrid => grids[(int) currentTurn];
@@ -93,11 +97,18 @@ public class GameManager : Singleton<GameManager>
         onGameplayEnter.RaiseEvent();
     }
 
+    public void GameOver()
+    {
+        int wonPlayer = (int)currentTurn == 0? 1: 0;
+        onGameOver.RaiseEvent(wonPlayer + 1);
+    }
+
     public void SwitchTurn()
     {
         AssignItemsToGrid();
         currentTurn = currentTurn == PlayerTurn.FirstPlayer ? PlayerTurn.SecondPlayer : PlayerTurn.FirstPlayer;
         CurrentGrid.TakeTurn();
+        onTurnSwitch.RaiseEvent(currentTurn);
     }
 
     private void AssignItemsToGrid()
@@ -112,6 +123,11 @@ public class GameManager : Singleton<GameManager>
             }
             placedItems.Clear();
         }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Gameplay");
     }
 
     private void Update()
