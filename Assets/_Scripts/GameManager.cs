@@ -27,13 +27,18 @@ public class GameManager : Singleton<GameManager>
     [Header("Event Publisher")]
     [SerializeField] private BoolPublisher onGridValid;
     [SerializeField] private VoidPublisher onGameplayEnter;
-    [SerializeField] private IntPublisher onGameOver;
+    [SerializeField] private IntPublisher onPlayerWin;
+    [SerializeField] private VoidPublisher onGameOver;
     [SerializeField] private PlayerTurnPublisher onTurnSwitch;
+    [SerializeField] private Vector2Publisher onCellAttack;
 
     [Header("Others")]
     private PlayerTurn currentTurn = PlayerTurn.FirstPlayer;
+    public PlayerTurn CurrentTurn => currentTurn;
     public Grid CurrentGrid => grids[(int) currentTurn];
     private bool isInGameplay = false;
+    private bool isAttacking = false;
+    public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
 
     private void Awake()
     {
@@ -92,37 +97,52 @@ public class GameManager : Singleton<GameManager>
         AssignItemsToGrid();
 
         // Second player will be attacked first
-        currentTurn = PlayerTurn.SecondPlayer;
         isInGameplay = true;
+        SwitchTurn(PlayerTurn.SecondPlayer);
         onGameplayEnter.RaiseEvent();
     }
 
     public void GameOver()
     {
         int wonPlayer = (int)currentTurn == 0? 1: 0;
-        onGameOver.RaiseEvent(wonPlayer + 1);
+        onPlayerWin.RaiseEvent(wonPlayer + 1);
+        onGameOver.RaiseEvent();
     }
 
     public void SwitchTurn()
     {
         AssignItemsToGrid();
-        currentTurn = currentTurn == PlayerTurn.FirstPlayer ? PlayerTurn.SecondPlayer : PlayerTurn.FirstPlayer;
+
+        currentTurn = (currentTurn == PlayerTurn.FirstPlayer) ? PlayerTurn.SecondPlayer : PlayerTurn.FirstPlayer;
         CurrentGrid.TakeTurn();
+
+        if (!isInGameplay) return;
+        onTurnSwitch.RaiseEvent(currentTurn);
+    }
+
+    public void SwitchTurn(PlayerTurn playerTurn)
+    {
+        AssignItemsToGrid();
+
+        currentTurn = playerTurn;
+        CurrentGrid.TakeTurn();
+
+        if (!isInGameplay) return;
+
         onTurnSwitch.RaiseEvent(currentTurn);
     }
 
     private void AssignItemsToGrid()
     {
-        if (!isInGameplay)
+        if (isInGameplay) return;
+        
+        foreach (DraggableItem item in placedItems)
         {
-            foreach (DraggableItem item in placedItems)
-            {
-                CurrentGrid.status.Add(item, item.Width);
-                item.gameObject.SetActive(false);
-                Debug.Log(item + " " + item.Width);
-            }
-            placedItems.Clear();
+            CurrentGrid.status.Add(item, item.Width);
+            item.gameObject.SetActive(false);
+            Debug.Log(item + " " + item.Width);
         }
+        placedItems.Clear();
     }
 
     public void RestartGame()
@@ -134,17 +154,19 @@ public class GameManager : Singleton<GameManager>
     {
         if (!isInGameplay) return;
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !isAttacking)
         {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(CurrentGrid.GetComponent<RectTransform>(),
                 Input.mousePosition, null, out Vector2 localPoint);
             if (CurrentGrid.IsWithinGrid(localPoint))
             {
-                Vector2Int gridIndex = CurrentGrid.GetGridCellIndex(localPoint);
-                GridCell gridCell = CurrentGrid.GetGridCellByIndex(gridIndex);
+                onCellAttack.RaiseEvent(localPoint);
+                //// Attack grid cell
+                //Vector2Int gridIndex = CurrentGrid.GetGridCellIndex(localPoint);
+                //GridCell gridCell = CurrentGrid.GetGridCellByIndex(gridIndex);
 
-                Debug.Log("Cell index: " + gridIndex + " get attacked on " + CurrentGrid.gameObject.name);
-                gridCell.GetAttacked();
+                //Debug.Log("Cell index: " + gridIndex + " get attacked on " + CurrentGrid.gameObject.name);
+                //gridCell.GetAttacked();
             }
             else
             {

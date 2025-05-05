@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,7 @@ public class GridCell
     public Vector2 Position => visual.transform.position;
     public DraggableItem assignedItem;
     private bool isAttacked;
+    public bool IsAttacked => isAttacked;
 
     public GridCell(Image visual, Grid grid)
     {
@@ -16,9 +18,10 @@ public class GridCell
         this.visual = visual;
     }
 
-    public void GetAttacked()
+    public bool GetAttacked()
     {
-        if (isAttacked) return;
+        if (isAttacked) return false;
+        bool isHit;
 
         isAttacked = true;
         if (assignedItem != null)
@@ -26,11 +29,15 @@ public class GridCell
             visual.color = GameManager.Instance.hitColor;
             grid.GetAttacked(assignedItem);
             Debug.Log("This grid cell has assigned item: " + assignedItem);
+            isHit = true;
         }
         else
         {
-            GameManager.Instance.SwitchTurn();
             visual.color = GameManager.Instance.missedColor;
+            isHit = false;
+            //await Task.Delay(1000);
+            //GameManager.Instance.SwitchTurn();
         }
+        return isHit;
     }
 }

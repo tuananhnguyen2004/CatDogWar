@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07c0e23c846e5bc419fdedf316714e84, type: 3}
-  m_Name: OnGameOver
+  m_Script: {fileID: 11500000, guid: 942a7d2e0cddb2944a7fe8470c873494, type: 3}
+  m_Name: OnCellAttacked
   m_EditorClassIdentifier: 
