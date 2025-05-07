@@ -4363,6 +4363,7 @@ GameObject:
   - component: {fileID: 547695391}
   - component: {fileID: 547695392}
   - component: {fileID: 547695393}
+  - component: {fileID: 547695394}
   m_Layer: 5
   m_Name: Cat
   m_TagString: Untagged
@@ -4457,6 +4458,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PlayerAnimation, Assembly-CSharp
         m_MethodName: AnimateAttack
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &547695394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547695389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fca3a5b1d74842e4bbb4299b9ca9aa74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  publisher: {fileID: 11400000, guid: 71c76129e7083b743a1785fff7af5699, type: 2}
+  responses:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 547695391}
+        m_TargetAssemblyTypeName: PlayerAnimation, Assembly-CSharp
+        m_MethodName: AnimateOut
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7959,6 +7988,7 @@ GameObject:
   - component: {fileID: 1135494538}
   - component: {fileID: 1135494537}
   - component: {fileID: 1135494539}
+  - component: {fileID: 1135494540}
   m_Layer: 5
   m_Name: Dog
   m_TagString: Untagged
@@ -8053,6 +8083,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: PlayerAnimation, Assembly-CSharp
         m_MethodName: AnimateAttack
         m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1135494540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1135494535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fca3a5b1d74842e4bbb4299b9ca9aa74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  publisher: {fileID: 11400000, guid: 71c76129e7083b743a1785fff7af5699, type: 2}
+  responses:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1135494538}
+        m_TargetAssemblyTypeName: PlayerAnimation, Assembly-CSharp
+        m_MethodName: AnimateOut
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -9498,7 +9556,8 @@ MonoBehaviour:
   missedColor: {r: 0.9169811, g: 0.192047, b: 0.192047, a: 1}
   onGridValid: {fileID: 11400000, guid: 122b28560ec73324f928a75868648d89, type: 2}
   onGameplayEnter: {fileID: 11400000, guid: 1a1cff618a1ca3c4194338afc92d665d, type: 2}
-  onGameOver: {fileID: 11400000, guid: 1b8a516212f1a354daa2e2c9ceb8e8b7, type: 2}
+  onPlayerWin: {fileID: 11400000, guid: 1b8a516212f1a354daa2e2c9ceb8e8b7, type: 2}
+  onGameOver: {fileID: 11400000, guid: 71c76129e7083b743a1785fff7af5699, type: 2}
   onTurnSwitch: {fileID: 11400000, guid: fe680c22eba1fa544a35606b99f2913a, type: 2}
   onCellAttack: {fileID: 11400000, guid: ba7109217ffde744c8fa433e0cad76ad, type: 2}
 --- !u!4 &1275813777
