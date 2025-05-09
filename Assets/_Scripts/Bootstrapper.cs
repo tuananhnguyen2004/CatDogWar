@@ -1,11 +1,14 @@
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bootstrapper
 {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    public void InititializeScenes()
+    public static async Task InititializeScenes()
     {
-        //float ratio = 1284f / 2778f;
-        //Screen.SetResolution((int)(Screen.height * ratio), Screen.height, FullScreenMode.FullScreenWindow);
+        SceneManager.LoadScene("Bootstrapper", LoadSceneMode.Single);
+        await SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
     }
 }

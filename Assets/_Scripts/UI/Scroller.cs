@@ -1,16 +1,19 @@
+using SOEventSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Scroller : MonoBehaviour, IPointerClickHandler
 {
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Log();
-    }
     [SerializeField] private float speed;
     [SerializeField] private Vector2 scrollDirection;
+    [SerializeField] private StringPublisher onEnterGameScene;
     private RawImage image;
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        onEnterGameScene.RaiseEvent("Gameplay");
+    }
 
     public void Log()
     {
