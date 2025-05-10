@@ -1,10 +1,13 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Threading.Tasks;
+using SOEventSystem;
 
 public class PlayerAnimation : MonoBehaviour
 {
     [SerializeField] private PlayerTurn opponentTurn;
+    [SerializeField] private VoidPublisher onAttacking;
+    [SerializeField] private GameObject attackEffect;
 
     [Header("Animation Stats")]
     [SerializeField] private float moveDuration;
@@ -72,7 +75,9 @@ public class PlayerAnimation : MonoBehaviour
             .OnComplete(async () =>
             {
                 // Attack grid cell
+                onAttacking.RaiseEvent();
                 bool isHit = gridCell.GetAttacked();
+                Instantiate(attackEffect, gridCell.Position, Quaternion.identity);
                 await Task.Delay(100);
 
                 hand.transform.DOMove(initialHandPosition, moveDuration)
