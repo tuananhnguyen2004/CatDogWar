@@ -24,9 +24,10 @@ public class GridCell
         bool isHit;
 
         isAttacked = true;
+        visual.color = Color.white;
         if (assignedItem != null)
         {
-            visual.color = GameManager.Instance.hitColor;
+            visual.sprite = grid.HitSprite;
             grid.GetAttacked(assignedItem);
             Debug.Log("This grid cell has assigned item: " + assignedItem);
             isHit = true;
@@ -34,6 +35,7 @@ public class GridCell
         else
         {
             visual.color = GameManager.Instance.missedColor;
+            visual.sprite = grid.MissedSprite;
             isHit = false;
             //await Task.Delay(1000);
             //GameManager.Instance.SwitchTurn();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using SOEventSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum PlayerTurn
 {
@@ -21,6 +22,7 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private List<Grid> grids;
 
     [Header("Visuals")]
+    public Sprite hitImage;
     public Color hitColor;
     public Color missedColor;
 

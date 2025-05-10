@@ -35,6 +35,12 @@ public class Grid : MonoBehaviour
     [SerializeField] private Color invalidColor;
     private FlexibleGridLayout flexibleGridLayout;
 
+    [Header("Grid Cell Responses")]
+    [SerializeField] private Sprite hitSprite;
+    public Sprite HitSprite => hitSprite;
+    [SerializeField] private Sprite missedSprite;
+    public Sprite MissedSprite => missedSprite;
+
     /// <summary>
     /// Convert world position to grid index
     /// </summary>
