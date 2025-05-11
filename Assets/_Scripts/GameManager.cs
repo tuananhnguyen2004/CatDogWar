@@ -100,8 +100,8 @@ public class GameManager : Singleton<GameManager>
 
         // Second player will be attacked first
         isInGameplay = true;
-        SwitchTurn(PlayerTurn.SecondPlayer);
         onGameplayEnter.RaiseEvent();
+        SwitchTurn(PlayerTurn.SecondPlayer);
     }
 
     public void GameOver()
