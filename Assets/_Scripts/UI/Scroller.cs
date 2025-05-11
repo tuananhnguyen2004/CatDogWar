@@ -12,6 +12,7 @@ public class Scroller : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        AudioManager.Instance.StopMusic();
         onEnterGameScene.RaiseEvent("Gameplay");
     }
 
