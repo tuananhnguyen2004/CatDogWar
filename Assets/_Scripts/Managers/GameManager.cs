@@ -5,6 +5,7 @@ using System;
 using SOEventSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public enum PlayerTurn
 {
@@ -104,9 +105,12 @@ public class GameManager : Singleton<GameManager>
         SwitchTurn(PlayerTurn.SecondPlayer);
     }
 
-    public void GameOver()
+    public async Task GameOver()
     {
         int wonPlayer = (int)currentTurn == 0? 1: 0;
+        isInGameplay = false;
+
+        await Task.Delay(1000);
         onPlayerWin.RaiseEvent(wonPlayer + 1);
         onGameOver.RaiseEvent();
     }
@@ -147,11 +151,6 @@ public class GameManager : Singleton<GameManager>
         placedItems.Clear();
     }
 
-    public void RestartGame()
-    {
-        SceneManager.LoadScene("Gameplay");
-    }
-
     private void Update()
     {
         if (!isInGameplay) return;
@@ -163,12 +162,6 @@ public class GameManager : Singleton<GameManager>
             if (CurrentGrid.IsWithinGrid(localPoint))
             {
                 onCellAttack.RaiseEvent(localPoint);
-                //// Attack grid cell
-                //Vector2Int gridIndex = CurrentGrid.GetGridCellIndex(localPoint);
-                //GridCell gridCell = CurrentGrid.GetGridCellByIndex(gridIndex);
-
-                //Debug.Log("Cell index: " + gridIndex + " get attacked on " + CurrentGrid.gameObject.name);
-                //gridCell.GetAttacked();
             }
             else
             {

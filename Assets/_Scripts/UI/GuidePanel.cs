@@ -14,6 +14,7 @@ public class GuidePanel : MonoBehaviour
     public void Show()
     {
         canvasGroup.blocksRaycasts = true;
+        canvasGroup.interactable = true;
         canvasGroup.DOFade(1f, animateSpeed);
     }
 

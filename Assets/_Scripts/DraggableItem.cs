@@ -80,10 +80,14 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (!isInteractable) return;
 
+        AudioManager.Instance.PlaySoundFX("Drag");
+
         Debug.Log("Begin Drag");
         isDragging = true;
+
         GameManager.Instance.CurrentGrid.CalculateGridBounds(this, width, out Vector2 minPos, out Vector2 maxPos);
         GameManager.Instance.CurrentGrid.ClearItem(this);
+
         minGridPos = minPos;
         maxGridPos = maxPos;
         transform.SetAsLastSibling();
@@ -131,6 +135,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             GameManager.Instance.CurrentGrid.ClearHighlight();
             GameManager.Instance.PlacedItems.Add(this);
 
+            AudioManager.Instance.PlaySoundFX("Drop");
+
             // Snap the draggable item to the grid cell
             GridCell gridCell = GetItemGridCell();
             transform.position = gridCell.Position;
@@ -163,6 +169,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         }
         if (!isWithinGrid) return;
         
+        AudioManager.Instance.PlaySoundFX("Rotate");
+
         // Handle Rotation Logic
         currentDirection = (Direction)(((int)currentDirection + 1) % Enum.GetNames(typeof(Direction)).Length);
         transform.rotation = Quaternion.AngleAxis((transform.eulerAngles.z - 90) % 360, Vector3.forward);

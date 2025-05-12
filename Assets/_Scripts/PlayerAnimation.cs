@@ -63,6 +63,8 @@ public class PlayerAnimation : MonoBehaviour
             return;
         }
 
+        AudioManager.Instance.PlaySoundFX("BeginAttack");
+
         hand.transform.DOScale(handScale, moveDuration / 2f)
                 .SetEase(Ease.InOutSine)
                 .OnComplete(() =>
@@ -78,6 +80,12 @@ public class PlayerAnimation : MonoBehaviour
                 onAttacking.RaiseEvent();
                 bool isHit = gridCell.GetAttacked();
                 Instantiate(attackEffect, gridCell.Position, Quaternion.identity);
+
+                if (isHit)
+                    AudioManager.Instance.PlaySoundFX("ImpactHit");
+                else
+                    AudioManager.Instance.PlaySoundFX("ImpactMiss");
+
                 await Task.Delay(100);
 
                 hand.transform.DOMove(initialHandPosition, moveDuration)

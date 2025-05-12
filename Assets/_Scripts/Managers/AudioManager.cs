@@ -41,6 +41,8 @@ public class AudioManager : Singleton<AudioManager>
         AudioClip clip = sfxList.Find(x => x.name == sfx).clip;
         if (clip != null)
         {
+            Debug.Log("Play sfx: " + clip.name);
+            sfxSource.Stop(); // Stop any currently playing sound effect
             sfxSource.clip = clip;
             sfxSource.PlayOneShot(clip);
         }
