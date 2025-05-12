@@ -1,3 +1,4 @@
+using SOEventSystem;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,11 @@ public class AudioManager : Singleton<AudioManager>
     private void Start()
     {
         PlayMusic("MainTheme");
+
+        // Load audio data
+        musicSource.volume = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        sfxSource.volume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        AudioListener.volume = PlayerPrefs.GetFloat("MasterVolume", 1f);
     }
 
     public void PlayMusic(string music)
@@ -60,5 +66,18 @@ public class AudioManager : Singleton<AudioManager>
     public void SetMasterVolume(float volume)
     {
         AudioListener.volume = volume;
+        PlayerPrefs.SetFloat("MasterVolume", volume);
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        musicSource.volume = volume;
+        PlayerPrefs.SetFloat("MusicVolume", volume);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        sfxSource.volume = volume;
+        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 }
